@@ -192,6 +192,12 @@ canvas{max-width:100%;display:block}
   .form-grid,.grid-2,.grid-3{grid-template-columns:1fr}
   .col-span-2{grid-column:span 1}
   .stats-grid{grid-template-columns:1fr 1fr}
+  #topbar-user-badge{display:inline-flex !important}
+  #topbar-logout-btn{display:flex !important}
+}
+@media(min-width:769px){
+  #topbar-user-badge{display:none !important}
+  #topbar-logout-btn{display:none !important}
 }
 .sale-items-table{width:100%;font-size:13px}
 .sale-items-table th,.sale-items-table td{padding:8px 10px;text-align:right}
@@ -277,7 +283,9 @@ canvas{max-width:100%;display:block}
         <span id="topbar-title" style="font-size:18px;font-weight:700">لوحة التحكم</span>
       </div>
       <div id="topbar-actions">
+        <span id="topbar-user-badge" style="display:none;align-items:center;gap:6px;background:rgba(99,102,241,.12);color:#4f46e5;font-size:12px;font-weight:700;padding:5px 10px;border-radius:20px;border:1px solid rgba(99,102,241,.25)">👤 <span id="topbar-role-text">-</span></span>
         <button class="topbar-btn" onclick="toggleDark()" id="dark-btn" title="الوضع الداكن">🌙</button>
+        <button id="topbar-logout-btn" class="topbar-btn" onclick="doLogout()" title="تسجيل الخروج" style="display:none;background:rgba(239,68,68,.1);color:#ef4444;border-color:rgba(239,68,68,.3)">🚪</button>
       </div>
     </div>
     <div id="page-content">
@@ -1186,6 +1194,7 @@ function initApp(){
   document.getElementById('user-name').textContent=currentUser.name;
   document.getElementById('user-role').textContent=ROLE_LABELS[currentUser.role]||currentUser.role;
   document.getElementById('user-avatar').textContent=currentUser.name.charAt(0);
+  const roleEl=document.getElementById('topbar-role-text');if(roleEl)roleEl.textContent=ROLE_LABELS[currentUser.role]||currentUser.role;
   applyPermissions();
   // Restore dark mode
   if(localStorage.getItem('st_dark')==='1'){document.body.classList.add('dark');document.getElementById('dark-btn').textContent='☀️';}
